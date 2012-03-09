@@ -1,0 +1,353 @@
+<div id="instructions">  
+<ol>
+	<li>Have your middle term ready (it does not exist in the conclusion)</li>
+	<li>Enter the Major Premise's Quantity/Quality Only</li>
+	<li>Enter the Minor Premise Quantity/Quality Only</li> 
+	<li>Enter the Full Conclusion</li>
+	<li>Choose Evaluate button</li>
+</ol>   
+</div>
+<div id="conclusion">
+<table style="border-collapse:collapse;">  
+<thead>
+<tr>
+<th class='ui-widget-header' colspan="4">Standard Form Categorical Syllogism</th>          
+</tr>
+
+<tr>
+<td class="ui-widget-content">
+<select id="quantity_major" class="ui-widget-content"> 
+<option value="NONE" selected="selected">Major</option>      
+<option value="UNIVERSAL">All</option>
+<option value="UNIVERSAL_E">No</option>
+<option value="PARTICULAR">Some</option>
+</select>
+</td>       
+<td class="ui-widget-content">
+<input type="text" id="subject_major"  class="ui-state-disabled"disabled="disabled" required=required/>
+</td>  
+<td class="ui-widget-content">  
+	<select id="quality_major" class="ui-widget-content"> 
+	<option value="NONE" selected="selected">Major</option>      
+	<option value="AFFIRMATIVE">are</option>
+	<option value="NEGATIVE">are not</option>   
+	<option value="AFFIRMATIVE">is</option>
+	<option value="NEGATIVE">is not</option>
+	</select>
+</td>  
+<td class="ui-widget-content">
+<input type="text" id="predicate_major" class="ui-state-disabled" disabled="disabled" required=required/>
+</td>
+</tr>
+
+<tr>
+<td class="ui-widget-content">
+<select id="quantity_minor" class="ui-widget-content"> 
+<option value="NONE" selected="selected">Minor</option>      
+<option value="UNIVERSAL">All</option>
+<option value="UNIVERSAL_E">No</option>
+<option value="PARTICULAR">Some</option>
+</select>
+</td>       
+<td class="ui-widget-content">
+<input type="text" id="subject_minor" class="ui-state-disabled" disabled="disabled" required=required/>
+</td>  
+<td class="ui-widget-content">  
+	<select id="quality_minor" class="ui-widget-content"> 
+	<option value="NONE" selected="selected">Minor</option>      
+	<option value="AFFIRMATIVE">are</option>
+	<option value="NEGATIVE">are not</option>   
+	<option value="AFFIRMATIVE">is</option>
+	<option value="NEGATIVE">is not</option>
+	</select>
+</td>  
+<td class="ui-widget-content">
+<input type="text" id="predicate_minor" class="ui-state-disabled" disabled="disabled" required=required/>
+</td>
+</tr>
+
+<tr>    
+<th class='ui-widget-header'>Quantity</th>  
+<th class='ui-widget-header'>Subject</th>
+<th class='ui-widget-header'>Quality</th>
+<th class='ui-widget-header'>Predicate</th>  
+</tr>
+</thead> 
+<tbody>
+<tr>
+<td class="ui-widget-content">
+<select id="quantity" class="ui-widget-content"> 
+<option value="NONE" selected="selected">Conclusion</option>      
+<option value="UNIVERSAL">All</option>
+<option value="UNIVERSAL_E">No</option>
+<option value="PARTICULAR">Some</option>
+</select>
+</td>       
+<td class="ui-widget-content">
+<input type="text" id="subject" required=required/>
+</td>  
+<td class="ui-widget-content">  
+	<select id="quality" class="ui-widget-content"> 
+	<option value="NONE" selected="selected">Conclusion</option>      
+	<option value="AFFIRMATIVE">are</option>
+	<option value="NEGATIVE">are not</option>   
+	<option value="AFFIRMATIVE">is</option>
+	<option value="NEGATIVE">is not</option>
+	</select>
+</td>  
+<td class="ui-widget-content">
+<input type="text" id="predicate" required=required/>
+</td>
+</tr> 
+
+
+ 
+</tbody>
+</table>                                      
+<br>
+<button id="evaluate">Evaluate</button>    
+</div>  
+<br>    
+<div id="figures"></div>  
+<div id="middle">
+<table>
+<tr>
+<td><label>What is the middle term?</label></td>    
+<td><input type="text" id="middleTerm" class="ui-widget-content" /></td>    
+<td><button id="evaluate_2">Continue</button></td>
+</tr>	
+</table>
+</div> 
+<div id="rules"></div>      
+<script> 
+
+	 $("#middle").dialog({
+	    modal: true,
+			autoOpen: false,
+			title: "Enter Middle Term",
+			height: 150,
+			width: 500
+	  });        
+	
+$("#evaluate").button({text: true, primary: 'ui-icon-check'}).click(function(){
+	
+	if ($("#subject").val() == "" || 
+		$("#predicate").val() == "" || 
+		$("#quality option:selected").val() == "NONE" || 
+		$("#quantity option:selected").val() == "NONE") {   	
+			alert(ERRORS["VALIDATION"].message);	
+		    return;
+		}  
+	 
+	$("#middle").dialog('open');
+
+});     
+
+$("#evaluate_2").button({text: true, primary: 'ui-icon-check'}).click(function(){ 
+		$("#middle").dialog('close');    
+		var hash = new Tables();                                              
+		
+		// create an instance of premise, and we will make this the conclusion
+		var conclusionPremise = new Premise({
+			 subject  	: $("#subject").val(),
+			 predicate  : $("#predicate").val(),
+		     middle   	: $("#middleTerm").val(),
+			 quality  	: $("#quality option:selected").val(),
+			 quantity 	: $("#quantity option:selected").val(),     
+			 letter	 	: "",
+			 premiseType: "conclusion"   		
+		});
+        conclusionPremise.checkForUniversalNegative();       
+		// middle term will not be in the conclusion as it breaks rule 1
+		if (conclusionPremise.isThreeTerms() == true) { alert(RULES["ONE"].fallacy + '\n\r' + RULES["ONE"].text); return;} 
+		         
+	   	// check against the hash table to figure out the letter type of the sentence
+		hash.getSentenceType(conclusionPremise, 0);      
+		
+		// create an instance of premise, and we will make this the majorPremise
+		var majorPremise = new Premise({
+			 subject  	: "",
+			 predicate  : $("#predicate").val(),
+		     middle   	: $("#middleTerm").val(),
+			 quality  	: $("#quality_major option:selected").val(),
+			 quantity 	: $("#quantity_major option:selected").val(),     
+			 letter	 	: "",
+			 premiseType: "major"		
+		});                                         
+		// check against the hash table to figure out the letter type of the sentence   
+		majorPremise.checkForUniversalNegative();        
+		hash.getSentenceType(majorPremise, 0);       
+		
+		var minorPremise = new Premise({
+			 subject  	: $("#subject").val(),
+			 predicate  : "",
+		     middle   	: $("#middleTerm").val(),
+			 quality  	: $("#quality_minor option:selected").val(),
+			 quantity 	: $("#quantity_minor option:selected").val(),     
+			 letter	 	: "",
+			 premiseType: "minor" 		
+		});                                         
+		// check against the hash table to figure out the letter type of the sentence   
+	   	minorPremise.checkForUniversalNegative();
+		hash.getSentenceType(minorPremise, 0);  
+		
+		var mood = "";
+		mood += majorPremise.getVal('letter').toString();
+	    mood += minorPremise.getVal('letter').toString(); 
+		mood += conclusionPremise.getVal('letter').toString();   
+                           		
+		var figures = new Array();
+		for(var i=1;i<5;i++)
+		{   
+			var strNum = "";                        
+			switch(i)
+			{
+			  	case 1:
+					strNum = "1";
+				break;
+			   	case 2:
+					strNum = "2";
+				break;
+				case 3:
+					strNum = "3";
+				break;
+				case 4:
+					strNum = "4";
+				break; 
+		        default:
+					strNum = "";  
+				break;   			
+			}  		
+			figures.push(hash.getSyllogism(mood, strNum)); 	
+		}  
+		
+	    $("#figures").load("figures.html", function(){   
+             
+            var mood = "";
+			mood += majorPremise.getVal('letter').toString();
+		    mood += minorPremise.getVal('letter').toString(); 
+			mood += conclusionPremise.getVal('letter').toString();
+			             
+			var quality = (majorPremise.getVal('quality') == "AFFIRMATIVE") ? "is/are" : "is/are not";
+		   	quality = (quantity == "No") ? "is/are" : quality;  
+			$("#1_major_quality").html(quality); 
+			$("#2_major_quality").html(quality);
+			$("#3_major_quality").html(quality); 
+			$("#4_major_quality").html(quality);  
+			   
+  
+	   	   	var quantity = "";
+			if (majorPremise.getVal('quantity') == "UNIVERSAL" && majorPremise.getVal('quality') == "AFFIRMATIVE" ) {  	 
+				quantity = "All";
+	   		} else if (majorPremise.getVal('quantity') == "PARTICULAR") { 
+		        quantity = "Some";
+			} else {
+				quantity = "No"; 	
+			}                              	
+			$("#1_major_quantity").html(quantity);
+			$("#2_major_quantity").html(quantity);
+			$("#3_major_quantity").html(quantity);
+			$("#4_major_quantity").html(quantity);   
+		  	
+			$("#1_major_middle").html(majorPremise.getVal('middle'));
+			$("#2_major_middle").html(majorPremise.getVal('middle'));
+			$("#3_major_middle").html(majorPremise.getVal('middle'));
+			$("#4_major_middle").html(majorPremise.getVal('middle'));
+			
+			$("#1_major_predicate").html(majorPremise.getVal('predicate'));	 
+			$("#2_major_predicate").html(majorPremise.getVal('predicate'));	 
+			$("#3_major_predicate").html(majorPremise.getVal('predicate'));	 
+			$("#4_major_predicate").html(majorPremise.getVal('predicate'));	  
+		    	
+			var quality = (minorPremise.getVal('quality') == "AFFIRMATIVE") ? "is/are" : "is/are not";
+			quality = (quantity == "No") ? "is/are" : quality;			
+			$("#1_minor_quality").html(quality);
+			$("#2_minor_quality").html(quality);
+			$("#3_minor_quality").html(quality);
+			$("#4_minor_quality").html(quality);    
+	   	 
+	   	   	var quantity = "";
+			if (minorPremise.getVal('quantity') == "UNIVERSAL" && minorPremise.getVal('quality') == "AFFIRMATIVE" ) {  	 
+				quantity = "All";
+	   		} else if (minorPremise.getVal('quantity') == "PARTICULAR") { 
+		        quantity = "Some";
+			} else {
+				quantity = "No"; 	
+			}                              		
+			$("#1_minor_quantity").html(quantity);
+			$("#2_minor_quantity").html(quantity);
+			$("#3_minor_quantity").html(quantity);
+			$("#4_minor_quantity").html(quantity);
+			     	
+			$("#1_minor_middle").html(minorPremise.getVal('middle')); 
+			$("#2_minor_middle").html(minorPremise.getVal('middle')); 
+			$("#3_minor_middle").html(minorPremise.getVal('middle')); 
+			$("#4_minor_middle").html(minorPremise.getVal('middle')); 
+			
+			$("#1_minor_subject").html(minorPremise.getVal('subject'));
+			$("#2_minor_subject").html(minorPremise.getVal('subject'));  
+			$("#3_minor_subject").html(minorPremise.getVal('subject'));  
+			$("#4_minor_subject").html(minorPremise.getVal('subject'));  
+	     
+		    var quality = (conclusionPremise.getVal('quality') == "AFFIRMATIVE") ? "is/are" : "is/are not";
+			quality = (quantity == "No") ? "is/are" : quality;    
+			$("#1_conclusion_quality").html(quality);
+			$("#2_conclusion_quality").html(quality);
+			$("#3_conclusion_quality").html(quality);
+			$("#4_conclusion_quality").html(quality);    
+	   	 
+	   	   	var quantity = "";
+			if (conclusionPremise.getVal('quantity') == "UNIVERSAL" && conclusionPremise.getVal('quality') == "AFFIRMATIVE" ) {  	 
+				quantity = "All";
+	   		} else if (conclusionPremise.getVal('quantity') == "PARTICULAR") { 
+		        quantity = "Some";
+			} else {
+				quantity = "No"; 	
+			} 
+			$("#1_conclusion_quantity").html(quantity);
+			$("#2_conclusion_quantity").html(quantity);    
+			$("#3_conclusion_quantity").html(quantity);    
+			$("#4_conclusion_quantity").html(quantity);    
+			
+			$("#1_conclusion_subject").html(conclusionPremise.getVal('subject'));
+			$("#2_conclusion_subject").html(conclusionPremise.getVal('subject')); 
+			$("#3_conclusion_subject").html(conclusionPremise.getVal('subject')); 
+			$("#4_conclusion_subject").html(conclusionPremise.getVal('subject')); 
+			    
+			$("#1_conclusion_predicate").html(conclusionPremise.getVal('predicate'));
+			$("#2_conclusion_predicate").html(conclusionPremise.getVal('predicate'));
+			$("#3_conclusion_predicate").html(conclusionPremise.getVal('predicate'));
+			$("#4_conclusion_predicate").html(conclusionPremise.getVal('predicate'));
+		    
+		
+			for (var i = 4; i>0;i--)
+			{
+				var figure = figures.pop();
+				console.log(figure.isValid); 
+			    var evaluation = (figure.isValid == true) ? "Valid" : "Invalid";
+				$("#" + i.toString() +"_evaluation_data").html(evaluation);   
+				$("#" + i.toString() +"_evaluation_data").addClass(evaluation)
+				$("#" + i.toString() +"_mood_data").html(mood);
+				 
+				
+				var rules = "";
+				if  (figure.rulesBroken.length > 0)
+				{
+					for (var j = 0; j<figure.rulesBroken.length;j++)
+					{    
+						console.log(figure.rulesBroken[j]);  
+						rules += "Rule: " + RULES[figure.rulesBroken[j]].id + " , " + RULES[figure.rulesBroken[j]].text; 
+											rules += "\n\r";
+											rules += "Fallacy: " + RULES[figure.rulesBroken[j]].fallacy;   				
+					}   
+				}
+				rules = (rules == "") ? "Undetermined" : rules;
+				$("#" + i.toString() + "_rule_data").html(rules);   
+			}
+
+		});	  
+		  
+	});   
+</script>                                                       
+
+

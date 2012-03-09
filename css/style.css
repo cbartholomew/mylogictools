@@ -1,0 +1,40 @@
+body
+{
+	font-size: small;
+	font-family: Tahoma;
+}
+
+.figure
+{
+border: 1px solid white;
+border-collapse: collapse;         
+}    
+
+.figureColumns
+{
+	padding: 5px;     
+	border: 1px solid white;
+	border-collapse: collapse;
+}
+
+.middleTerm
+{
+   color: green;    
+}
+
+.Valid
+{
+	color:green;
+	font-weight:bold;
+}
+
+.Invalid
+{
+   color:red;
+   font-weight:bold;
+}       
+
+select
+{
+	width: 100%;	
+}               

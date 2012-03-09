@@ -131,9 +131,13 @@
 	
 $("#evaluate").button({text: true, primary: 'ui-icon-check'}).click(function(){
 	
-	if ($("#subject").val() == "" || 
-		$("#predicate").val() == "" || 
-		$("#quality option:selected").val() == "NONE" || 
+	if ($("#subject").val()						   == "" 	 || 
+		$("#predicate").val() 					   == "" 	 || 
+		$("#quality option:selected").val() 	   == "NONE" ||   
+		$("#quality_minor option:selected").val()  == "NONE" ||
+		$("#quality_major option:selected").val()  == "NONE" ||
+		$("#quantity_minor option:selected").val() == "NONE" ||
+		$("#quantity_major option:selected").val() == "NONE" ||
 		$("#quantity option:selected").val() == "NONE") {   	
 			alert(ERRORS["VALIDATION"].message);	
 		    return;

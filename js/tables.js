@@ -43,6 +43,11 @@ function Tables()
 		}   
 	}   
 	
+	this.getSyllogism = function(mood, figure)
+	{      
+		return keyFigures['keyMoods["' + mood + '","' + figure + '"]'];	    
+	}
+	
     	var keyMoods = [
 		["AAA","1"],
 		["AEA","1"],
@@ -562,10 +567,7 @@ function Tables()
 		'keyMoods["OOO","4"]' : { isValid: false, rulesBroken: [] }   
 	};   
 	  
-	this.getSyllogism = function(mood, figure)
-	{      
-		return keyFigures['keyMoods["' + mood + '","' + figure + '"]'];	    
-	}
+
 	                                   
     
 }

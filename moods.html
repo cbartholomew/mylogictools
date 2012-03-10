@@ -1,0 +1,97 @@
+<div id="instructions_moods">  
+<ol>
+	<li>Select each letter type for each premise</li>
+	<li>Select the Evaluate button</li>
+</ol>   
+</div>
+<div id="mood">
+<table style="border-collapse:collapse">
+<tr>
+<th class="ui-widget-header" colspan="2">Mood</th>	  
+</tr>  
+
+<tr>     
+<td class="ui-widget-content"><label for="major_mood">Major</label></td>
+<td class="ui-widget-content">  
+<select id="major_mood" class="ui-widget-content"> 
+<option value="A" selected="selected">A</option>      
+<option value="E">E</option>
+<option value="I">I</option>
+<option value="O">O</option>
+</select> 
+</tr>  
+
+<tr>
+<td class="ui-widget-content"><label for="minor_mood">Minor</label></td>  
+<td class="ui-widget-content">  
+<select id="minor_mood" class="ui-widget-content"> 
+<option value="A" selected="selected">A</option>      
+<option value="E">E</option>
+<option value="I">I</option>
+<option value="O">O</option>
+</select>
+</tr>  
+
+<tr>
+<td class="ui-widget-content"><label for="conclusion_mood">Conclusion</label></td> 
+<td class="ui-widget-content">  
+<select id="conclusion_mood" class="ui-widget-content"> 
+<option value="A" selected="selected">A</option>      
+<option value="E">E</option>
+<option value="I">I</option>
+<option value="O">O</option>
+</select>
+</td>  
+</tr>
+
+<tr>
+<td class="ui-widget-content"><label for="figures">Figure</label></td> 
+<td class="ui-widget-content">
+<select id="figures_select" class="ui-widget-content"> 
+<option value="1" selected="selected">One</option>      
+<option value="2">Two</option>
+<option value="3">Three</option>
+<option value="4">Four</option>
+</select>
+</td>   
+</tr>
+</table>
+<br>
+<button id="evaluate_3">Evaluate</button>
+</div>
+<br>
+<div id="figures_2"></div>
+<script>
+$("#evaluate_3").button({text: true, primary: 'ui-icon-check'}).click(function(){  
+                    
+
+	$("#figures_2").load("moods_evaluation.html", function(){   
+		console.log("loading");  
+	   	var hash   = new Tables();	
+		var mood   = $("#major_mood option:selected").val() + $("#minor_mood option:selected").val() + $("#conclusion_mood option:selected").val();
+		var a_figure = $("#figures_select option:selected").val();
+		
+		var b_figures = hash.getSyllogism(mood,a_figure);  
+		$("#mood_evaluation").html(mood);   
+		
+		var a_evaluation = (b_figures.isValid == true) ? "Valid" : "Invalid";   
+		$("#result_evaluation").html(a_evaluation);
+		
+		var rules = "";
+		if  (b_figures.rulesBroken.length > 0)
+		{
+			for (var j = 0; j<b_figures.rulesBroken.length;j++)
+			{    
+				console.log(b_figures.rulesBroken[j]);  
+				rules += "Rule: " + RULES[b_figures.rulesBroken[j]].id + " , " + RULES[b_figures.rulesBroken[j]].text; 
+									rules += "\n\r";
+									rules += "Fallacy: " + RULES[b_figures.rulesBroken[j]].fallacy;   				
+			}   
+		}
+		rules = (rules == "") ? "Undetermined" : rules;
+	   	$("#rule_evaluation").html(rules);
+	 	$("#result_evaluation").addClass(a_evaluation);  
+	});
+
+}); 
+</script>

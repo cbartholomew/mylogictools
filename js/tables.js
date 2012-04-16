@@ -43,12 +43,80 @@ function Tables()
 		}   
 	}   
 	
+	/*    Privledge Function
+	 *    getSyllogism, given any mood and figure, will return validity 	  
+	 */
 	this.getSyllogism = function(mood, figure)
 	{      
 		return keyFigures['keyMoods["' + mood + '","' + figure + '"]'];	    
 	}
 	
-    	var keyMoods = [
+	 
+	/*    Privledge Function
+	 *    printTwoTermTruthTableValue, will print out the truth table for two term conditions  
+	 */
+	this.printTwoTermTruthTableValue = function()
+	{
+		 for(i=0;i<twoTermColumnTruths.length;i++)
+		 {      
+				console.log("Evaluating:  " + twoTermColumnTruths[i].toString())
+			    console.log("_____________________________________________");
+				console.log("OR:"    + twoTruthTerms[twoTermColumnTruths[i].toString()]["or"]);
+				console.log("AND: "  + twoTruthTerms[twoTermColumnTruths[i].toString()]["and"]);
+				console.log("IF: "   + twoTruthTerms[twoTermColumnTruths[i].toString()]["if"]);
+				console.log("_____________________________________________");      
+		 }  
+	}
+	 
+	/*    Privledge Function
+	 *    evaluateTwoTermTruthTable, will return the truth value of a sepecific truth condition
+	 *    termA - t/f
+	 *    termB - t/f
+	 *    operator - "and", "or", "if","and_not", "or_not", "if_not"
+	 */
+	this.evaluateTwoTermTruthTable = function(termA, termB, operator)
+	{		
+		var result = termA.toString() + "," + termB.toString();
+		console.log(twoTruthTerms[result][operator]);
+	}                              
+
+    /*
+		Hash Table Key for Two Term Values
+	*/
+	var twoTermColumnTruths = [
+			[true	,	true],
+			[true	,	false],
+			[false	,	true],
+			[false	,	false]
+	]; 
+   
+ 	/* 
+	    Hash Table for Two Term Values 
+	*/
+	var twoTruthTerms = {      	
+		"true,true"    : {  "or": true, "or_not": false,  "and":true,  "and_not":false, "if":true,  "if_not":false },
+		"true,false"   : {  "or": true, "or_not": false,  "and":false, "and_not":true,  "if":false, "if_not":true  },
+		"false,true"   : {  "or": true, "or_not": false,  "and":false, "and_not":true,  "if":true,  "if_not":false },
+		"false,false"  : {  "or": false,"or_not": true,   "and":false, "and_not":true,  "if":true,  "if_not":false }		
+	};
+	
+	 /*
+		Hash Table Key for Three Term Values
+	*/
+	var threeTermColumnTruths = [
+			[true	,	true	,  true    ],
+			[true	,	true 	,  false   ], 
+			[true	,	false	,  true    ], 
+			[true	,	false	,  false   ],
+			[false	,	true	,  true    ],     
+			[false	,	true	,  false   ], 
+			[false	,	false	,  true    ], 
+			[false	,	false	,  false   ] 
+			
+	];
+   
+   
+   var keyMoods = [
 		["AAA","1"],
 		["AEA","1"],
 		["AIA","1"],
@@ -566,8 +634,7 @@ function Tables()
 		'keyMoods["OIO","4"]' : { isValid: false, rulesBroken: [] },
 		'keyMoods["OOO","4"]' : { isValid: false, rulesBroken: [] }   
 	};   
-	  
+	   
+   
 
-	                                   
-    
 }

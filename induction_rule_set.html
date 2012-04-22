@@ -1,0 +1,15 @@
+<script>
+$(function(){
+var html = "";
+for (i=1;i<=6;i++)
+{	
+html += "<h3><a href='#'>Inductive Rule Set</a></h3>";
+html += "<div>";
+html += "<p class='Valid' id='" + INDUCTIVE_CRITERIA[i].id.toString() +"'>Criteria: " + INDUCTIVE_CRITERIA[i].id.toString() + " " + INDUCTIVE_CRITERIA[i].text.toString() + "</p>"; 	
+html += "</div>";
+}
+
+$("#inductionContainer").html(html);	
+});	
+</script>
+<div id="inductionContainer"></div>

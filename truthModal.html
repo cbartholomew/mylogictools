@@ -1,0 +1,35 @@
+<script>
+$(document).ready(function(){
+	$("#truthEvaluate").button({text: true, primary: 'ui-icon-check'}).click(function()
+	{
+		console.log("button works");
+	});
+});
+</script>
+
+<div id="truthModal">                     
+<table style="border-collapse:collapse;">
+<tr>
+   	<th class="ui-widget-header">is Not?</th> 
+	<th class="ui-widget-header">S</th>
+	<th class="ui-widget-header">TFO</th>  
+	<th class="ui-widget-header">is Not?</th>
+	<th class="ui-widget-header">P</th>
+	<th class="ui-widget-header">Action</th>
+</tr>
+<tr>
+   	<td class="ui-widget-content">~<input type="checkbox" id="not_subject" value="0"></td> 
+	<td class="ui-widget-content"><input type="textbox"  id="truth_subject"></td>
+	<td class="ui-widget-content">
+		<select id="truthFunctionalOperator">
+	      	    <option id="and">and •</option>                                                                                                      
+                <option id="or">or V</option>
+				<option id="if_then">if then ><option>
+		</select>
+	</td>  
+	<td class="ui-widget-content">~<input type="checkbox" id="not_predicate" value="0"></td>
+	<td class="ui-widget-content"><input type="textbox"  id="truth_predicate"></td>
+	<td class="ui-widget-content"><button id="truthEvaluate">Evaluate</button></td>
+</tr>	
+</table> 	
+</div>

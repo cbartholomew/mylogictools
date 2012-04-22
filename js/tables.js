@@ -57,15 +57,25 @@ function Tables()
 	 */
 	this.printTwoTermTruthTableValue = function()
 	{
+		 var html = "";
 		 for(i=0;i<twoTermColumnTruths.length;i++)
-		 {      
-				console.log("Evaluating:  " + twoTermColumnTruths[i].toString())
-			    console.log("_____________________________________________");
-				console.log("OR:"    + twoTruthTerms[twoTermColumnTruths[i].toString()]["or"]);
-				console.log("AND: "  + twoTruthTerms[twoTermColumnTruths[i].toString()]["and"]);
-				console.log("IF: "   + twoTruthTerms[twoTermColumnTruths[i].toString()]["if"]);
-				console.log("_____________________________________________");      
+		 {     
+			   var notA = (twoTermColumnTruths[i].toString().split(",")[0] == "true") ? "false" : "true";
+			   var notB = (twoTermColumnTruths[i].toString().split(",")[1] == "true") ? "false" : "true";
+			 	
+			   html += "<tr>";
+			   html += "<td class='ui-widget-content figureColumns Invalid'>" + notA + "</td>";
+			   html += "<td class='ui-widget-content figureColumns Invalid'>" + notB + "</td>";
+			   html += "<td class='ui-widget-content figureColumns'>"		  + twoTermColumnTruths[i].toString().split(",")[0] + "</td>";
+			   html += "<td class='ui-widget-content figureColumns'>" 		  + twoTermColumnTruths[i].toString().split(",")[1] + "</td>";
+			   html += "<td class='ui-widget-content figureColumns or'>" 	  + twoTruthTerms[twoTermColumnTruths[i].toString()]["or"]  + "</td>";
+			   html += "<td class='ui-widget-content figureColumns and'>" 	  + twoTruthTerms[twoTermColumnTruths[i].toString()]["and"] + "</td>";
+			   html += "<td class='ui-widget-content figureColumns Valid'>"   + twoTruthTerms[twoTermColumnTruths[i].toString()]["if"]  + "</td>";
+			   html += "</tr>";
+				 
 		 }  
+		
+		return html;
 	}
 	 
 	/*    Privledge Function
@@ -77,7 +87,7 @@ function Tables()
 	this.evaluateTwoTermTruthTable = function(termA, termB, operator)
 	{		
 		var result = termA.toString() + "," + termB.toString();
-		console.log(twoTruthTerms[result][operator]);
+		
 	}                              
 
     /*

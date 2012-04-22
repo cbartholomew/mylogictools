@@ -1,0 +1,23 @@
+<div id="accordionContainer">
+	<script>
+	$(function(){
+		var html = "";
+		html += "<h3><a href='#'>Syllogism Criteria</a></h3>";
+		html += "<div>";
+		for (i=1;i<=6;i++)
+		{
+			html += "<p id='" + RULES[i].id.toString() +"'>Rule " + RULES[i].id.toString() + ": " + RULES[i].text.toString() + "</p>"; 
+			html += "<p	class='Valid'>Fallacy for Rule " +  RULES[i].id.toString() + ": " + RULES[i].fallacy.toString(); 	+ "</p>";
+		}
+		html += "</div>";
+		html += "<h3><a href='#'>Induction Criteria</a></h3>";
+		html += "<div>";
+		for (i=1;i<=6;i++)
+		{	
+			html += "<p id='" + INDUCTIVE_CRITERIA[i].id.toString() +"'>Criteria " + INDUCTIVE_CRITERIA[i].id.toString() + ": " + INDUCTIVE_CRITERIA[i].text.toString() + "</p>"; 	
+		}
+		html += "</div>";	
+		$("#accordionContainer").html(html);
+	});
+	</script>
+</div>

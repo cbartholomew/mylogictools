@@ -1,0 +1,54 @@
+<script>
+$(document).ready(function(){
+
+	$("#specifcTruthModal").dialog({
+	   		modal: true,
+			autoOpen: false,
+			resizeable: false,
+			title: "Fill in Information",
+			height: 150,
+			width: 650
+	 });
+
+	$("#renderSpecificTruth").button({text: true, primary: 'ui-icon-check'}).click(function(){   
+        $("#specifcTruthModal").load("truthModal.html");		
+		$("#specifcTruthModal").dialog('open');			
+	});
+	
+	$("#renderSpecificTruthEquation").button({text: true, primary: 'ui-icon-check'}).click(function(){   		
+	});
+	
+	$("#renderAllTables").button({text: true, primary: 'ui-icon-check'}).click(function(){   
+        var html = ""; 
+		
+		html +="<table class='figure'>";
+		html +="<tr>";
+		html +="<th class='ui-widget-header figureColumns Invalid'>~A</th>";
+		html +="<th class='ui-widget-header figureColumns Invalid'>~B</th>";
+		html +="<th class='ui-widget-header figureColumns'>A</th>";
+		html +="<th class='ui-widget-header figureColumns'>B</th>";
+		html +="<th class='ui-widget-header figureColumns'>A V B</th>";
+		html +="<th class='ui-widget-header figureColumns'>A • B</th>";
+		html +="<th class='ui-widget-header figureColumns'>If A Then B</th>";
+		html +="</tr>";
+		
+		var truth = new Tables();
+		html += truth.printTwoTermTruthTableValue();
+		
+		html += "</table>";
+		
+		$("#truthContentContainer").html(html);		
+	});   
+});        
+</script>
+
+<div id="truthTableContainer"> 
+<div id="buttonContainer"> 
+<button id="renderAllTables" style="width:200px;height:75px;">Entire Truth Table</button>
+<button id="renderSpecificTruth" style="width:200px;height:75px;">Specific Truth</button> 
+<button id="renderSpecificTruthEquation" style="width:200px;height:75px;">Truth Statement</button> 
+</div>
+<br>
+<div id="truthContentContainer"></div>
+<div id="specifcTruthModal"></div>
+</div>

@@ -35,6 +35,19 @@ border-collapse: collapse;
    font-weight:bold;
 }       
 
+
+.or
+{
+   color:orange;
+   font-weight:bold;
+}
+
+.and
+{
+   color:yellow;
+   font-weight:bold;
+}
+
 select
 {
 	width: 100%;	

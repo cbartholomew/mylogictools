@@ -9,20 +9,27 @@
 <script src="js/tables.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/constants.js" type="text/javascript" charset="utf-8"></script>
             
-<script>                                   
+<script>    
+
+$(document).ready(function(){    
+	                           
 $(function(){	                 
 	$('#tabs').tabs({ajaxOptions: {type: 'POST'}});              
 });
-</script>                                       
+
+});
+</script>
+                                       
 </head>
 <body>
-<div id="tabs">
+<div id="tabs" style="margin:0 auto 0 auto 0;">
 		<ul>
 			<li><a href="syllogisms.html">Catagorical Syllogisms</a></li> 
 			<li><a href="moods.html">Mood Lookup</a></li>
-			<li><a href="truthTable.html">Truth Tables</a></li>    
+			<li><a href="symbolic.html">Symbolic</a></li>
+			<li><a href="rules.html">Rules</a></li>  
 			<li><a href="about.html">About</a></li>
 		</ul>
-	</div>
+</div>
 </body>
 </html>

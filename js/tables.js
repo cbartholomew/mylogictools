@@ -77,6 +77,32 @@ function Tables()
 		
 		return html;
 	}
+	
+	/*    Privledge Function
+	 *    printTwoTermTruthTableValue, will print out the truth table for two term conditions  
+	 */
+	this.printThreeTermTruthTableValue = function()
+	{
+		 var html = "";
+		 for(i=0;i<twoTermColumnTruths.length;i++)
+		 {     
+			   var notA = (twoTermColumnTruths[i].toString().split(",")[0] == "true") ? "false" : "true";
+			   var notB = (twoTermColumnTruths[i].toString().split(",")[1] == "true") ? "false" : "true";
+			 	
+			   html += "<tr>";
+			   html += "<td class='ui-widget-content figureColumns Invalid'>" + notA + "</td>";
+			   html += "<td class='ui-widget-content figureColumns Invalid'>" + notB + "</td>";
+			   html += "<td class='ui-widget-content figureColumns'>"		  + twoTermColumnTruths[i].toString().split(",")[0] + "</td>";
+			   html += "<td class='ui-widget-content figureColumns'>" 		  + twoTermColumnTruths[i].toString().split(",")[1] + "</td>";
+			   html += "<td class='ui-widget-content figureColumns or'>" 	  + twoTruthTerms[twoTermColumnTruths[i].toString()]["or"]  + "</td>";
+			   html += "<td class='ui-widget-content figureColumns and'>" 	  + twoTruthTerms[twoTermColumnTruths[i].toString()]["and"] + "</td>";
+			   html += "<td class='ui-widget-content figureColumns Valid'>"   + twoTruthTerms[twoTermColumnTruths[i].toString()]["if"]  + "</td>";
+			   html += "</tr>";
+				 
+		 }  
+		
+		return html;
+	}
 	 
 	/*    Privledge Function
 	 *    evaluateTwoTermTruthTable, will return the truth value of a sepecific truth condition
@@ -124,7 +150,35 @@ function Tables()
 			[false	,	false	,  false   ] 
 			
 	];
-   
+	
+   	/* 
+	    Hash Table for Two Term Values 
+	*/
+	/*
+	var threeTruthTerms = {      	                                                       
+	   "true,true,true"	     : {  "or":true, "or_not":false ,  "and":true , "and_not":true , "if":true , "if_not":true },   
+	   "true,true,false"     : {  "or": , "or_not": ,  "and": , "and_not": , "if": , "if_not": }, 
+	   "true,false,true"     : {  "or": , "or_not": ,  "and": , "and_not": , "if": , "if_not": },
+	   "true,false,false"    : {  "or": , "or_not": ,  "and": , "and_not": , "if": , "if_not": },  
+	   "false,true,true"     : {  "or": , "or_not": ,  "and": , "and_not": , "if": , "if_not": },  
+	   "false,true,false"    : {  "or": , "or_not": ,  "and": , "and_not": , "if": , "if_not": },  
+	   "false,false,true"    : {  "or": , "or_not": ,  "and": , "and_not": , "if": , "if_not": },  
+	   "false,false,false"   : {  "or": , "or_not": ,  "and": , "and_not": , "if": , "if_not": }
+	}; 
+	*/                                                                                       
+	                                                                                        
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+
+		
+				
+	//};
    
    var keyMoods = [
 		["AAA","1"],

@@ -3,21 +3,21 @@
 How to call:
  
       // creating your person object:
-      var Patrick = new Person({
-            name: "Patrick", // inside of objects we use commas
+      var Christopher = new Person({
+            name: "Christopher", // inside of objects we use commas
             title: "Programmer"
       });
      
       // call the privileged functions
-      Patrick.programs("jquery and html");
-      Patrick.sayTitle();
+      Christopher.programs("jquery and html");
+      Christopher.sayTitle();
  
       // call the public function
-      Patrick.getPublic();
+      Christopher.getPublic();
      
       //Can't call the private variables - Doesn't work
-      //Patrick.init() <-- Private Function - Doesn't work
-      //var NoData = Patrick.ajaxData 
+      //Christopher.init() <-- Private Function - Doesn't work
+      //var NoData = Christopher.ajaxData 
  
 */
 // This is your class (Person Object)
@@ -44,7 +44,7 @@ function Person(config){
      
       // privileged  functions (people can access this if they instantiate the object)
      
-// “this” means (this object or instance – “Patrick Instance” – Patrick.programs(“stuff”) )
+// “this” means (this object or instance – “Christopher Instance” – Christopher.programs(“stuff”) )
       this.programs = function(what)
       {    
             alert("privledged  function: " + name + " Programs " + what);    
